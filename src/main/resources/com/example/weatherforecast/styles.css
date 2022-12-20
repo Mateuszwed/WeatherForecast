@@ -1,0 +1,47 @@
+
+.container {
+
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, rgba(146,224,255,1), rgba(0,183,255,0.8));
+    -fx-background-position: center center;
+
+}
+
+.controlsContainer {
+/*    -fx-background-color: linear-gradient(45deg, red, blue);*/
+
+}
+
+.acceptButton {
+	-fx-background-color:	linear-gradient(#ff951c, #ff7a0d );
+	-fx-text-fill: black;
+	-fx-font-size: 13px;
+	-fx-padding: 5 30 5 30;
+	-fx-font-weight: bold;
+
+}
+
+.acceptButton:hover {
+	-fx-background-color:	linear-gradient(orange, orangered );
+
+}
+
+.acceptButton:pressed {
+	-fx-background-color:	linear-gradient(#a84e03, #964500 );
+}
+
+.displayWeatherContainer {
+    -fx-background-color: #d4d4d4;
+}
+
+.bigWeatherBox {
+    -fx-background-color: #96dcff;
+    -fx-background-radius: 10 10 10 10;
+
+}
+
+.smallWeatherBox {
+    -fx-background-color: #96dcff;
+    -fx-background-radius: 10 10 10 10;
+    -fx-width: 50;
+
+}
