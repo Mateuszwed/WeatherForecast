@@ -4,14 +4,17 @@ import com.example.weatherforecast.Launcher;
 import com.example.weatherforecast.model.Weather;
 import com.example.weatherforecast.model.WeatherService;
 import com.example.weatherforecast.model.client.WeatherClientFactory;
+import com.example.weatherforecast.view.DayOfWeek;
 import com.example.weatherforecast.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -134,7 +137,6 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         leftWeatherBox.setVisible(false);
         rightWeatherBox.setVisible(false);
 
@@ -149,6 +151,7 @@ public class MainWindowController extends BaseController implements Initializabl
         leftHumidityLabelShow.setText(weather.getHumidity() + "%");
         setLeftIcons(weather);
         leftWeatherBox.setVisible(true);
+        setExtendedForecast(leftExtendedForecast);
     }
 
     void displayRightWeather(Weather weather) {
@@ -161,6 +164,7 @@ public class MainWindowController extends BaseController implements Initializabl
         rightHumidityLabelShow.setText(weather.getHumidity() + "%");
         setRightIcons(weather);
         rightWeatherBox.setVisible(true);
+        setExtendedForecast(rightExtendedForecast);
     }
 
     void setLeftIcons(Weather weather){
@@ -174,11 +178,44 @@ public class MainWindowController extends BaseController implements Initializabl
     void cleanLeftView(){
         countryAndCityLabel.setText("");
         leftWeatherBox.setVisible(false);
+        leftExtendedForecast.setVisible(false);
     }
 
     void cleanRightView(){
         rightCountryAndCityLabel.setText("");
         rightWeatherBox.setVisible(false);
+        rightExtendedForecast.setVisible(false);
+    }
+
+    void setExtendedForecast(HBox extendedForecast){
+
+        extendedForecast.getChildren().clear();
+        extendedForecast.setVisible(true);
+
+        for(int i = 1; i < weathersList.size(); i++){
+            VBox vbox = new VBox();
+            vbox.getStyleClass().add("smallWeatherBox");
+            vbox.setMinWidth(100);
+            vbox.setAlignment(Pos.CENTER);
+
+            Label cityName = new Label(DayOfWeek.getDayName(weathersList.get(i).getDate().plusDays(i)));
+            ImageView icon = new ImageView(new Image(Launcher.class.getResource(weathersList.get(i).getIcon() + ".png").toString(), 35, 35, false, false));
+            Label temperature = new Label(weathersList.get(i).getTemperatureDay() + "\u00B0" + "/" + weathersList.get(i).getTemperatureNight() + "\u00B0");
+            Label pressure = new Label(weathersList.get(i).getPressure() + " hPa");
+            Label wind = new Label(weathersList.get(i).getWind() + " km/h");
+
+
+            vbox.getChildren().addAll(cityName,
+                    icon,
+                    temperature,
+                    pressure,
+                    wind);
+
+            extendedForecast.getChildren().add(vbox);
+            extendedForecast.setSpacing(15);
+            extendedForecast.setAlignment(Pos.CENTER);
+        }
+
     }
 
     public MainWindowController(ViewFactory viewFactory, String fxmlName) {
