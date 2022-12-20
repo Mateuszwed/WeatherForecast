@@ -6,11 +6,6 @@
 
 }
 
-.controlsContainer {
-/*    -fx-background-color: linear-gradient(45deg, red, blue);*/
-
-}
-
 .acceptButton {
 	-fx-background-color:	linear-gradient(#ff951c, #ff7a0d );
 	-fx-text-fill: black;

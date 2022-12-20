@@ -1,8 +1,11 @@
 package com.example.weatherforecast.model;
 
+import com.example.weatherforecast.model.client.WeatherClient;
+
 import java.io.IOException;
 
 public class WeatherService {
+
     private final WeatherClient weatherClient;
 
     public WeatherService(WeatherClient weatherClient) {
