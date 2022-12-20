@@ -43,7 +43,7 @@ public class ViewFactory {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-        //stage.getIcons().add(new Image(String.valueOf(Launcher.class.getResource("02d.png"))));
+        stage.getIcons().add(new Image(String.valueOf(Launcher.class.getResource("02d.png"))));
         activesStages.add(stage);
     }
 
