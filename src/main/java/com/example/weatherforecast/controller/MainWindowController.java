@@ -1,5 +1,8 @@
 package com.example.weatherforecast.controller;
 
+import com.example.weatherforecast.model.Weather;
+import com.example.weatherforecast.model.WeatherService;
+import com.example.weatherforecast.model.client.WeatherClientFactory;
 import com.example.weatherforecast.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,9 +13,14 @@ import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
+
+    private WeatherService weatherService;
+    private List<Weather> weathersList = new ArrayList<Weather>();
 
     @FXML
     private TextField leftCountryTextField;
@@ -85,6 +93,21 @@ public class MainWindowController extends BaseController implements Initializabl
 
         String country = leftCountryTextField.getText();
         String city = leftCityTextField.getText();
+        WeatherClientFactory weatherClientFactory = new WeatherClientFactory();
+        WeatherService weatherService = new WeatherService(weatherClientFactory);
+
+        try {
+            for(int i = 0; i < 5; i++) {
+                Weather weather = weatherService.getWeather(city, country, i);
+                weathersList.add(weather);
+            }
+            displayLeftWeather(weathersList.get(0));
+            weathersList.clear();
+        }catch (IOException e){
+            cleanLeftView();
+            leftError.setText("Wpisano nieprawidłowe dane");
+        }
+
     }
 
     @FXML
