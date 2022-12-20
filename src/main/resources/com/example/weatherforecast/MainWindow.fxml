@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minWidth="920.0" prefHeight="597.0" prefWidth="920.0" styleClass="container" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minWidth="920.0" prefHeight="597.0" prefWidth="920.0" styleClass="container" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox maxWidth="450.0" minWidth="450.0" prefHeight="572.0" prefWidth="450.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
@@ -53,7 +53,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="34.0" prefWidth="300.0" styleClass="controlsContainer">
                <children>
-                  <Button mnemonicParsing="false" onAction="#showFirstWeather" styleClass="acceptButton" text="Pokaż pogodę" />
+                  <Button mnemonicParsing="false" styleClass="acceptButton" text="Pokaż pogodę" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="45.0" prefWidth="450.0">
@@ -215,7 +215,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="34.0" prefWidth="300.0" styleClass="controlsContainer">
                <children>
-                  <Button mnemonicParsing="false" onAction="#showSecondWeather" styleClass="acceptButton" text="Pokaż pogodę" />
+                  <Button mnemonicParsing="false" styleClass="acceptButton" text="Pokaż pogodę" />
                </children>
             </HBox>
             <VBox alignment="CENTER" prefHeight="45.0" prefWidth="450.0">
