@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -82,11 +83,14 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     void showLeftWeatherButtonAction() {
 
+        String country = leftCountryTextField.getText();
+        String city = leftCityTextField.getText();
     }
 
     @FXML
     void showRightWeatherButtonAction() {
-
+        String country = rightCountryTextField.getText();
+        String city = rightCityTextField.getText();
     }
 
     @Override
