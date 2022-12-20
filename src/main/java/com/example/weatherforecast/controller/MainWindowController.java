@@ -116,6 +116,20 @@ public class MainWindowController extends BaseController implements Initializabl
     void showRightWeatherButtonAction() {
         String country = rightCountryTextField.getText();
         String city = rightCityTextField.getText();
+        WeatherClientFactory weatherClientFactory = new WeatherClientFactory();
+        WeatherService weatherService = new WeatherService(weatherClientFactory);
+
+        try {
+            for(int i = 0; i < 5; i++) {
+                Weather weather = weatherService.getWeather(city, country, i);
+                weathersList.add(weather);
+            }
+            displayRightWeather(weathersList.get(0));
+            weathersList.clear();
+        }catch (IOException e){
+            cleanRightView();
+            rightError.setText("Wpisano nieprawidłowe dane");
+        }
     }
 
     @Override
@@ -135,7 +149,6 @@ public class MainWindowController extends BaseController implements Initializabl
         leftHumidityLabelShow.setText(weather.getHumidity() + "%");
         setLeftIcons(weather);
         leftWeatherBox.setVisible(true);
-
     }
 
     void displayRightWeather(Weather weather) {
@@ -148,7 +161,6 @@ public class MainWindowController extends BaseController implements Initializabl
         rightHumidityLabelShow.setText(weather.getHumidity() + "%");
         setRightIcons(weather);
         rightWeatherBox.setVisible(true);
-
     }
 
     void setLeftIcons(Weather weather){
@@ -157,6 +169,16 @@ public class MainWindowController extends BaseController implements Initializabl
 
     void setRightIcons(Weather weather){
         rightIcon.setImage(new Image(Launcher.class.getResource(weather.getIcon() + ".png").toString()));
+    }
+
+    void cleanLeftView(){
+        countryAndCityLabel.setText("");
+        leftWeatherBox.setVisible(false);
+    }
+
+    void cleanRightView(){
+        rightCountryAndCityLabel.setText("");
+        rightWeatherBox.setVisible(false);
     }
 
     public MainWindowController(ViewFactory viewFactory, String fxmlName) {
