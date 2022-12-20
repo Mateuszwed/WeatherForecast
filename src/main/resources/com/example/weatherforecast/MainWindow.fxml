@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane minWidth="920.0" prefHeight="597.0" prefWidth="920.0" styleClass="container" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox maxWidth="450.0" minWidth="450.0" prefHeight="572.0" prefWidth="450.0" BorderPane.alignment="CENTER_RIGHT">
+         <children>
+            <HBox prefHeight="42.0" prefWidth="300.0" styleClass="controlsContainer">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="121.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="77.0" text="Państwo:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="firstCountryTextField" prefHeight="25.0" prefWidth="160.0" promptText="opcjonalnie" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="42.0" prefWidth="300.0" styleClass="controlsContainer">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="121.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="77.0" text="Miasto:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="firstCityTextField" prefHeight="25.0" prefWidth="160.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="34.0" prefWidth="300.0" styleClass="controlsContainer">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#showFirstWeather" styleClass="acceptButton" text="Pokaż pogodę" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="45.0" prefWidth="450.0">
+               <children>
+                  <Label fx:id="countryAndCityLabel" textAlignment="CENTER" textFill="#545454">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fx:id="weatherBox" prefHeight="133.0" prefWidth="450.0" styleClass="bigWeatherBox">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="133.0" prefWidth="113.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Dzisiaj" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <ImageView fx:id="firstIcon" fitHeight="105.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="133.0" prefWidth="110.0">
+                     <children>
+                        <Label fx:id="temperatureLabelShow">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="133.0" prefWidth="131.0">
+                     <children>
+                        <VBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="windInfoLabel" text="Wiatr:" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="pressureInfoLabel" text="Ciśnienie:" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="51.0" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="humidityInfoLabel" text="Wilgotność:" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="133.0" prefWidth="110.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="windLabelShow" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="pressureLabelShow" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="51.0" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="humidityLabelShow" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="39.0" prefWidth="450.0" />
+            <HBox fx:id="extendedForecast" prefHeight="133.0" prefWidth="450.0" />
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="450.0">
+               <children>
+                  <Label fx:id="leftError" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="5.0" right="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+      </VBox>
+   </left>
+   <right>
+      <VBox maxWidth="450.0" minWidth="450.0" prefHeight="573.0" prefWidth="450.0" BorderPane.alignment="CENTER_LEFT">
+         <children>
+            <HBox prefHeight="42.0" prefWidth="300.0" styleClass="controlsContainer">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="121.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="77.0" text="Państwo:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="secondCountryTextField" promptText="opcjonalnie" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="300.0" styleClass="controlsContainer">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="121.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="77.0" text="Miasto:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="secondCityTextField" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="34.0" prefWidth="300.0" styleClass="controlsContainer">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#showSecondWeather" styleClass="acceptButton" text="Pokaż pogodę" />
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="45.0" prefWidth="450.0">
+               <children>
+                  <Label fx:id="secondCountryAndCityLabel" textAlignment="CENTER" textFill="#545454">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+               </children></VBox>
+            <HBox fx:id="rightWeatherBox" prefHeight="133.0" prefWidth="450.0" styleClass="bigWeatherBox">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="133.0" prefWidth="113.0">
+                     <children>
+                        <Label text="Dzisiaj" textFill="#545454">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="secondIcon" fitHeight="105.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="133.0" prefWidth="110.0">
+                     <children>
+                        <Label fx:id="secondTemperatureLabelShow">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="133.0" prefWidth="131.0">
+                     <children>
+                        <VBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label text="Wiatr:" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label text="Ciśnienie:" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="51.0" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label text="Wilgotność:" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="133.0" prefWidth="110.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="secondWindLabelShow" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="secondPressureLabelShow" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="10.0" layoutY="51.0" prefHeight="41.0" prefWidth="128.0">
+                           <children>
+                              <Label fx:id="secondHumidityLabelShow" textFill="#545454">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="39.0" prefWidth="450.0" />
+            <HBox fx:id="secondExtendedForecast" prefHeight="133.0" prefWidth="450.0" />
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="450.0">
+               <children>
+                  <Label fx:id="rightError" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="5.0" right="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+   <center>
+      <Separator opacity="0.5" orientation="VERTICAL" prefHeight="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
