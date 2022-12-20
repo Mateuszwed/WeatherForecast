@@ -1,5 +1,6 @@
 package com.example.weatherforecast.controller;
 
+import com.example.weatherforecast.Launcher;
 import com.example.weatherforecast.model.Weather;
 import com.example.weatherforecast.model.WeatherService;
 import com.example.weatherforecast.model.client.WeatherClientFactory;
@@ -8,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
@@ -122,6 +124,39 @@ public class MainWindowController extends BaseController implements Initializabl
         leftWeatherBox.setVisible(false);
         rightWeatherBox.setVisible(false);
 
+    }
+
+    void displayLeftWeather(Weather weather) {
+        leftError.setText("");
+        countryAndCityLabel.setText(weather.getCountry() + ", " + weather.getCityName());
+        leftTemperatureLabelShow.setText(weather.getTemperatureDay() + "\u00B0C");
+        leftWindLabelShow.setText(weather.getWind() + " km/h");
+        leftPressureLabelShow.setText(weather.getPressure() + " hPa");
+        leftHumidityLabelShow.setText(weather.getHumidity() + "%");
+        setLeftIcons(weather);
+        leftWeatherBox.setVisible(true);
+
+    }
+
+    void displayRightWeather(Weather weather) {
+
+        rightError.setText("");
+        rightCountryAndCityLabel.setText(weather.getCountry() + ", " + weather.getCityName());
+        rightTemperatureLabelShow.setText(weather.getTemperatureDay() + "\u00B0C");
+        rightWindLabelShow.setText(weather.getWind() + " km/h");
+        rightPressureLabelShow.setText(weather.getPressure() + " hPa");
+        rightHumidityLabelShow.setText(weather.getHumidity() + "%");
+        setRightIcons(weather);
+        rightWeatherBox.setVisible(true);
+
+    }
+
+    void setLeftIcons(Weather weather){
+        leftIcon.setImage(new Image(Launcher.class.getResource(weather.getIcon() + ".png").toString()));
+    }
+
+    void setRightIcons(Weather weather){
+        rightIcon.setImage(new Image(Launcher.class.getResource(weather.getIcon() + ".png").toString()));
     }
 
     public MainWindowController(ViewFactory viewFactory, String fxmlName) {
