@@ -3,6 +3,7 @@ package com.example.weatherforecast.model;
 import com.example.weatherforecast.model.client.WeatherClient;
 
 import java.io.IOException;
+import java.util.List;
 
 public class WeatherService {
 
@@ -12,7 +13,7 @@ public class WeatherService {
         this.weatherClient = weatherClient;
     }
 
-    public Weather getWeather(String cityName, String country, int day) throws IOException {
-        return weatherClient.getWeather(cityName, country, day);
+    public List<Weather> getWeatherForecast(String cityName, String country){
+        return weatherClient.getWeatherForecast(cityName, country);
     }
 }

@@ -1,20 +1,18 @@
 package com.example.weatherforecast.model;
 
-import java.time.LocalDate;
 
 public class Weather {
 
-    private String cityName;
-    private String country;
-    private String temperatureDay;
-    private String temperatureNight;
-    private String humidity;
-    private String wind;
-    private String pressure;
-    private String icon;
-    private LocalDate date;
+    private final String cityName;
+    private final String country;
+    private final String temperatureDay;
+    private final String temperatureNight;
+    private final String humidity;
+    private final String wind;
+    private final String pressure;
+    private final String icon;
 
-    public Weather(String cityName, String country, String temperatureDay, String temperatureNight, String humidity, String wind, String pressure, String icon, LocalDate date) {
+    public Weather(String cityName, String country, String temperatureDay, String temperatureNight, String humidity, String wind, String pressure, String icon) {
         this.cityName = cityName;
         this.country = country;
         this.temperatureDay = temperatureDay;
@@ -23,12 +21,8 @@ public class Weather {
         this.wind = wind;
         this.pressure = pressure;
         this.icon = icon;
-        this.date = date;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
 
     public String getCountry() {
         return country;

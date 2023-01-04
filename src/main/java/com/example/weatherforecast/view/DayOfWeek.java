@@ -6,26 +6,26 @@ public class DayOfWeek {
 
     public static String getDayName(LocalDate date){
 
-        switch(date.getDayOfWeek().toString()){
-            case "MONDAY":
+        switch(date.getDayOfWeek()){
+            case MONDAY:
                 return "Poniedziałek";
 
-            case "TUESDAY":
+            case TUESDAY:
                 return "Wtorek";
 
-            case "WEDNESDAY":
+            case WEDNESDAY:
                 return "Środa";
 
-            case "THURSDAY":
+            case THURSDAY:
                 return "Czwartek";
 
-            case "FRIDAY":
+            case FRIDAY:
                 return "Piątek";
 
-            case "SATURDAY":
+            case SATURDAY:
                 return "Sobota";
 
-            case "SUNDAY":
+            case SUNDAY:
                 return "Niedziela";
 
             default:

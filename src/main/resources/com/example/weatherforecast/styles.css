@@ -38,5 +38,11 @@
     -fx-background-color: #96dcff;
     -fx-background-radius: 10 10 10 10;
     -fx-width: 50;
+    -fx-min-width: 100;
+    -fx-alignment: center;
+}
 
+.extendedForecast {
+    -fx-spacing: 15;
+    -fx-alignment: center;
 }

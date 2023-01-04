@@ -11,18 +11,19 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewFactory {
 
-    private ArrayList<Stage> activesStages;
+    private List<Stage> activesStages;
 
     public ViewFactory() {
-        activesStages = new ArrayList<Stage>();
+        activesStages = new ArrayList<>();
     }
 
     public void showMainWindow(){
 
-        BaseController controller = new MainWindowController(this, "MainWindow.fxml");
+        BaseController controller = new MainWindowController("MainWindow.fxml");
         initializeStage(controller);
     }
 

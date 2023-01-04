@@ -10,9 +10,8 @@ public class Launcher extends Application {
         launch(args);
     }
 
-
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         ViewFactory viewFactory = new ViewFactory();
         viewFactory.showMainWindow();
     }

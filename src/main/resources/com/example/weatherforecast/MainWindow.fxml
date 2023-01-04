@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane minWidth="920.0" prefHeight="597.0" prefWidth="920.0" styleClass="container" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minWidth="920.0" prefHeight="597.0" prefWidth="920.0" styleClass="container" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox maxWidth="450.0" minWidth="450.0" prefHeight="572.0" prefWidth="450.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
@@ -58,7 +58,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="45.0" prefWidth="450.0">
                <children>
-                  <Label fx:id="countryAndCityLabel" textAlignment="CENTER" textFill="#545454">
+                  <Label fx:id="leftCountryAndCityLabel" textAlignment="CENTER" textFill="#545454">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
@@ -155,7 +155,7 @@
                </children>
             </HBox>
             <HBox prefHeight="39.0" prefWidth="450.0" />
-            <HBox fx:id="leftExtendedForecast" prefHeight="133.0" prefWidth="450.0" />
+            <HBox fx:id="leftExtendedForecast" prefHeight="133.0" prefWidth="450.0" styleClass="extendedForecast" />
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="450.0">
                <children>
                   <Label fx:id="leftError" textFill="RED">
@@ -312,7 +312,7 @@
                </children>
             </HBox>
             <HBox prefHeight="39.0" prefWidth="450.0" />
-            <HBox fx:id="rightExtendedForecast" prefHeight="133.0" prefWidth="450.0" />
+            <HBox fx:id="rightExtendedForecast" prefHeight="133.0" prefWidth="450.0" styleClass="extendedForecast" />
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="450.0">
                <children>
                   <Label fx:id="rightError" textFill="RED">

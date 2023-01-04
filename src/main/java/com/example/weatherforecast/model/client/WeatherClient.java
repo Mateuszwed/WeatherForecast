@@ -2,9 +2,9 @@ package com.example.weatherforecast.model.client;
 
 import com.example.weatherforecast.model.Weather;
 
-import java.io.IOException;
+import java.util.List;
 
 public interface WeatherClient {
 
-    Weather getWeather(String cityName, String country, int day) throws IOException;
+    List<Weather> getWeatherForecast(String cityName, String country);
 }

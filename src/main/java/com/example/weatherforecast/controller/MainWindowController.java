@@ -3,12 +3,10 @@ package com.example.weatherforecast.controller;
 import com.example.weatherforecast.Launcher;
 import com.example.weatherforecast.model.Weather;
 import com.example.weatherforecast.model.WeatherService;
-import com.example.weatherforecast.model.client.WeatherClientFactory;
+import com.example.weatherforecast.model.client.OpenWeatherMapClient;
 import com.example.weatherforecast.view.DayOfWeek;
-import com.example.weatherforecast.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -16,16 +14,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
 
     private WeatherService weatherService;
-    private List<Weather> weathersList = new ArrayList<Weather>();
 
     @FXML
     private TextField leftCountryTextField;
@@ -34,7 +31,7 @@ public class MainWindowController extends BaseController implements Initializabl
     private TextField leftCityTextField;
 
     @FXML
-    private Label countryAndCityLabel;
+    private Label leftCountryAndCityLabel;
 
     @FXML
     private HBox leftWeatherBox;
@@ -95,111 +92,93 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     void showLeftWeatherButtonAction() {
-
         String country = leftCountryTextField.getText();
         String city = leftCityTextField.getText();
-        WeatherClientFactory weatherClientFactory = new WeatherClientFactory();
-        WeatherService weatherService = new WeatherService(weatherClientFactory);
+        OpenWeatherMapClient weatherClientFactory = new OpenWeatherMapClient();
+        weatherService = new WeatherService(weatherClientFactory);
 
         try {
-            for(int i = 0; i < 5; i++) {
-                Weather weather = weatherService.getWeather(city, country, i);
-                weathersList.add(weather);
-            }
-            displayLeftWeather(weathersList.get(0));
-            weathersList.clear();
-        }catch (IOException e){
-            cleanLeftView();
-            leftError.setText("Wpisano nieprawidłowe dane");
+            List<Weather> weathersList = weatherService.getWeatherForecast(city, country);
+            displayWeatherBoxes(weathersList,
+                    leftError,
+                    leftCountryAndCityLabel,
+                    leftTemperatureLabelShow,
+                    leftWindLabelShow,
+                    leftPressureLabelShow,
+                    leftHumidityLabelShow,
+                    leftIcon,
+                    leftWeatherBox,
+                    leftExtendedForecast);
+        } catch (Exception e) {
+            cleanView(leftCountryAndCityLabel, leftWeatherBox, leftExtendedForecast);
+            leftError.setText("Wystąpił błąd");
         }
-
     }
 
     @FXML
     void showRightWeatherButtonAction() {
         String country = rightCountryTextField.getText();
         String city = rightCityTextField.getText();
-        WeatherClientFactory weatherClientFactory = new WeatherClientFactory();
-        WeatherService weatherService = new WeatherService(weatherClientFactory);
-
+        OpenWeatherMapClient weatherClientFactory = new OpenWeatherMapClient();
+        weatherService = new WeatherService(weatherClientFactory);
         try {
-            for(int i = 0; i < 5; i++) {
-                Weather weather = weatherService.getWeather(city, country, i);
-                weathersList.add(weather);
-            }
-            displayRightWeather(weathersList.get(0));
-            weathersList.clear();
-        }catch (IOException e){
-            cleanRightView();
-            rightError.setText("Wpisano nieprawidłowe dane");
+            List<Weather> weathersList = weatherService.getWeatherForecast(city, country);
+            displayWeatherBoxes(weathersList,
+                    rightError,
+                    rightCountryAndCityLabel,
+                    rightTemperatureLabelShow,
+                    rightWindLabelShow,
+                    rightPressureLabelShow,
+                    rightHumidityLabelShow,
+                    rightIcon,
+                    rightWeatherBox,
+                    rightExtendedForecast);
+        } catch (Exception e) {
+            cleanView(rightCountryAndCityLabel, rightWeatherBox, rightExtendedForecast);
+            rightError.setText("Wystąpił błąd");
         }
     }
+
+    public MainWindowController(String fxmlName) {
+        super(fxmlName);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         leftWeatherBox.setVisible(false);
         rightWeatherBox.setVisible(false);
-
     }
 
-    void displayLeftWeather(Weather weather) {
-        leftError.setText("");
-        countryAndCityLabel.setText(weather.getCountry() + ", " + weather.getCityName());
-        leftTemperatureLabelShow.setText(weather.getTemperatureDay() + "\u00B0C");
-        leftWindLabelShow.setText(weather.getWind() + " km/h");
-        leftPressureLabelShow.setText(weather.getPressure() + " hPa");
-        leftHumidityLabelShow.setText(weather.getHumidity() + "%");
-        setLeftIcons(weather);
-        leftWeatherBox.setVisible(true);
-        setExtendedForecast(leftExtendedForecast);
+    void displayWeatherBoxes(List<Weather> weathersList, Label error, Label countryAndCityName, Label temperature, Label wind, Label pressure, Label humidity, ImageView icon, HBox weatherBox, HBox extendedForecast) {
+        error.setText("");
+        countryAndCityName.setText(weathersList.get(0).getCountry() + ", " + weathersList.get(0).getCityName());
+        temperature.setText(weathersList.get(0).getTemperatureDay() + "\u00B0C");
+        wind.setText(weathersList.get(0).getWind() + " km/h");
+        pressure.setText(weathersList.get(0).getPressure() + " hPa");
+        humidity.setText(weathersList.get(0).getHumidity() + "%");
+        icon.setImage(new Image(Objects.requireNonNull(Launcher.class.getResource(weathersList.get(0).getIcon() + ".png")).toString()));
+        weatherBox.setVisible(true);
+        setExtendedForecast(extendedForecast, weathersList);
     }
 
-    void displayRightWeather(Weather weather) {
-
-        rightError.setText("");
-        rightCountryAndCityLabel.setText(weather.getCountry() + ", " + weather.getCityName());
-        rightTemperatureLabelShow.setText(weather.getTemperatureDay() + "\u00B0C");
-        rightWindLabelShow.setText(weather.getWind() + " km/h");
-        rightPressureLabelShow.setText(weather.getPressure() + " hPa");
-        rightHumidityLabelShow.setText(weather.getHumidity() + "%");
-        setRightIcons(weather);
-        rightWeatherBox.setVisible(true);
-        setExtendedForecast(rightExtendedForecast);
-    }
-
-    void setLeftIcons(Weather weather){
-        leftIcon.setImage(new Image(Launcher.class.getResource(weather.getIcon() + ".png").toString()));
-    }
-
-    void setRightIcons(Weather weather){
-        rightIcon.setImage(new Image(Launcher.class.getResource(weather.getIcon() + ".png").toString()));
-    }
-
-    void cleanLeftView(){
+    void cleanView(Label countryAndCityLabel, HBox weatherBox, HBox extendedForecast) {
         countryAndCityLabel.setText("");
-        leftWeatherBox.setVisible(false);
-        leftExtendedForecast.setVisible(false);
+        weatherBox.setVisible(false);
+        extendedForecast.setVisible(false);
     }
 
-    void cleanRightView(){
-        rightCountryAndCityLabel.setText("");
-        rightWeatherBox.setVisible(false);
-        rightExtendedForecast.setVisible(false);
-    }
 
-    void setExtendedForecast(HBox extendedForecast){
-
+    void setExtendedForecast(HBox extendedForecast, List<Weather> weathersList) {
         extendedForecast.getChildren().clear();
         extendedForecast.setVisible(true);
 
-        for(int i = 1; i < weathersList.size(); i++){
+        for ( int i = 1; i < weathersList.size(); i++ ) {
             VBox vbox = new VBox();
             vbox.getStyleClass().add("smallWeatherBox");
-            vbox.setMinWidth(100);
-            vbox.setAlignment(Pos.CENTER);
 
-            Label cityName = new Label(DayOfWeek.getDayName(weathersList.get(i).getDate().plusDays(i)));
-            ImageView icon = new ImageView(new Image(Launcher.class.getResource(weathersList.get(i).getIcon() + ".png").toString(), 35, 35, false, false));
+            Label cityName = new Label(DayOfWeek.getDayName(LocalDate.now().plusDays(i)));
+            ImageView icon = new ImageView(new Image(Objects.requireNonNull(Launcher.class.getResource(weathersList.get(i).getIcon() + ".png")).toString(), 35, 35, false, false));
             Label temperature = new Label(weathersList.get(i).getTemperatureDay() + "\u00B0" + "/" + weathersList.get(i).getTemperatureNight() + "\u00B0");
             Label pressure = new Label(weathersList.get(i).getPressure() + " hPa");
             Label wind = new Label(weathersList.get(i).getWind() + " km/h");
@@ -212,14 +191,6 @@ public class MainWindowController extends BaseController implements Initializabl
                     wind);
 
             extendedForecast.getChildren().add(vbox);
-            extendedForecast.setSpacing(15);
-            extendedForecast.setAlignment(Pos.CENTER);
         }
-
     }
-
-    public MainWindowController(ViewFactory viewFactory, String fxmlName) {
-        super(viewFactory, fxmlName);
-    }
-
 }
