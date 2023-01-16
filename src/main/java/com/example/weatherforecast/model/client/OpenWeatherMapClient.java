@@ -14,7 +14,7 @@ import java.util.List;
 public class OpenWeatherMapClient implements WeatherClient {
 
     private static final String CODE = "542ffd081e67f4512b705f89d2a611b2";
-    private List<Weather> forecastWeatherList = new ArrayList<>();
+    private final List<Weather> forecastWeatherList = new ArrayList<>();
 
     private String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();

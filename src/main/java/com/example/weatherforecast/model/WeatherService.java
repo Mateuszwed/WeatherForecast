@@ -2,7 +2,6 @@ package com.example.weatherforecast.model;
 
 import com.example.weatherforecast.model.client.WeatherClient;
 
-import java.io.IOException;
 import java.util.List;
 
 public class WeatherService {
