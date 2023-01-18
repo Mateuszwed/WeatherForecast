@@ -12,7 +12,11 @@ public class WeatherService {
         this.weatherClient = weatherClient;
     }
 
-    public List<Weather> getWeatherForecast(String cityName, String country){
-        return weatherClient.getWeatherForecast(cityName, country);
+    public List<Weather> getWeatherForecast(String cityName, String country) {
+        try {
+            return weatherClient.getWeatherForecast(cityName, country);
+        } catch (Exception e) {
+            throw new FailedGetWeatherForecastException();
+        }
     }
 }

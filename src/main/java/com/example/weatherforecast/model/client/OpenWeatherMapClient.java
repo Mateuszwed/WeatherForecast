@@ -1,5 +1,6 @@
 package com.example.weatherforecast.model.client;
 
+import com.example.weatherforecast.model.FailedGetWeatherForecastException;
 import com.example.weatherforecast.model.Weather;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,11 +40,11 @@ public class OpenWeatherMapClient implements WeatherClient {
     }
 
 
-    public List<Weather> getWeatherForecast(String cityName, String country){
+    public List<Weather> getWeatherForecast(String cityName, String country) {
         JSONArray jsonArray;
-        try {
+        try{
             JSONObject jsonObject = readJsonFromUrl("https://api.openweathermap.org/data/2.5/forecast/daily?q=" + cityName + "," + country + "&cnt=5&appid=" + CODE + "&units=metric");
-            for(int i =0; i < 5; i++) {
+            for ( int i = 0; i < 5; i++ ) {
                 jsonArray = jsonObject.getJSONArray("list");
                 JSONObject object = jsonArray.getJSONObject(i);
                 JSONArray weatherJ = object.getJSONArray("weather");
@@ -63,10 +64,9 @@ public class OpenWeatherMapClient implements WeatherClient {
                 Weather weather = new Weather(jsonCityName, jsonCountry, temperatureDay, temperatureNight, humidity, wind, pressure, icon);
                 forecastWeatherList.add(weather);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            }catch (Exception e) {
+                e.printStackTrace();
         }
         return forecastWeatherList;
     }
-
 }
