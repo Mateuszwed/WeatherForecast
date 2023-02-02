@@ -2,7 +2,9 @@ package com.example.weatherforecast.controller;
 
 import com.example.weatherforecast.Launcher;
 import com.example.weatherforecast.model.Weather;
-import com.example.weatherforecast.model.WeatherService;
+import com.example.weatherforecast.model.client.GetWeatherForecastException;
+import com.example.weatherforecast.model.client.JSONReader;
+import com.example.weatherforecast.model.service.WeatherService;
 import com.example.weatherforecast.model.client.OpenWeatherMapClient;
 import com.example.weatherforecast.view.DayOfWeek;
 import javafx.fxml.FXML;
@@ -23,6 +25,7 @@ import java.util.ResourceBundle;
 public class MainWindowController extends BaseController implements Initializable {
 
     private WeatherService weatherService;
+    private JSONReader jsonReader;
 
     @FXML
     private TextField leftCountryTextField;
@@ -90,11 +93,13 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private Label rightError;
 
+
     @FXML
     void showLeftWeatherButtonAction() {
         String country = leftCountryTextField.getText();
         String city = leftCityTextField.getText();
-        OpenWeatherMapClient weatherClientFactory = new OpenWeatherMapClient();
+        jsonReader = new JSONReader();
+        OpenWeatherMapClient weatherClientFactory = new OpenWeatherMapClient(jsonReader);
         weatherService = new WeatherService(weatherClientFactory);
 
         try {
@@ -109,9 +114,10 @@ public class MainWindowController extends BaseController implements Initializabl
                     leftIcon,
                     leftWeatherBox,
                     leftExtendedForecast);
-        } catch (Exception e) {
+        } catch (GetWeatherForecastException e) {
             cleanView(leftCountryAndCityLabel, leftWeatherBox, leftExtendedForecast);
             leftError.setText("Wystąpił błąd");
+            e.printStackTrace();
         }
     }
 
@@ -119,7 +125,8 @@ public class MainWindowController extends BaseController implements Initializabl
     void showRightWeatherButtonAction() {
         String country = rightCountryTextField.getText();
         String city = rightCityTextField.getText();
-        OpenWeatherMapClient weatherClientFactory = new OpenWeatherMapClient();
+        jsonReader = new JSONReader();
+        OpenWeatherMapClient weatherClientFactory = new OpenWeatherMapClient(jsonReader);
         weatherService = new WeatherService(weatherClientFactory);
         try {
             List<Weather> weathersList = weatherService.getWeatherForecast(city, country);
@@ -133,7 +140,7 @@ public class MainWindowController extends BaseController implements Initializabl
                     rightIcon,
                     rightWeatherBox,
                     rightExtendedForecast);
-        } catch (Exception e) {
+        } catch (GetWeatherForecastException e) {
             cleanView(rightCountryAndCityLabel, rightWeatherBox, rightExtendedForecast);
             rightError.setText("Wystąpił błąd");
         }

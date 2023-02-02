@@ -1,37 +1,23 @@
 package com.example.weatherforecast.model.client;
 
-import com.example.weatherforecast.model.FailedGetWeatherForecastException;
 import com.example.weatherforecast.model.Weather;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.*;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpenWeatherMapClient implements WeatherClient {
 
     private static final String CODE = "542ffd081e67f4512b705f89d2a611b2";
+    private static final String URL_OPEN_WEATHER_MAP = "https://api.openweathermap.org/data/2.5/forecast/daily?q=";
+    private static final int DAYS = 5;
     private final List<Weather> forecastWeatherList = new ArrayList<>();
+    private final JSONReader jsonReader;
 
-    private String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
-    }
-
-    private JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-        try (InputStream is = new URL(url).openStream()) {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            String jsonText = readAll(rd);
-            return new JSONObject(jsonText);
-        }
+    public OpenWeatherMapClient(JSONReader jsonReader) {
+        this.jsonReader = jsonReader;
     }
 
     private String parameterRounding(String parameter) {
@@ -39,13 +25,11 @@ public class OpenWeatherMapClient implements WeatherClient {
         return String.valueOf(doubleParameter);
     }
 
-
-    public List<Weather> getWeatherForecast(String cityName, String country) {
-        JSONArray jsonArray;
-        try{
-            JSONObject jsonObject = readJsonFromUrl("https://api.openweathermap.org/data/2.5/forecast/daily?q=" + cityName + "," + country + "&cnt=5&appid=" + CODE + "&units=metric");
-            for ( int i = 0; i < 5; i++ ) {
-                jsonArray = jsonObject.getJSONArray("list");
+    public List<Weather> getWeatherForecast(String cityName, String country) throws GetWeatherForecastException {
+        try {
+            JSONObject jsonObject = jsonReader.readJsonFromUrl(URL_OPEN_WEATHER_MAP + cityName + "," + country + "&cnt=5&appid=" + CODE + "&units=metric");
+            for ( int i = 0; i < DAYS; i++ ) {
+                JSONArray jsonArray = jsonObject.getJSONArray("list");
                 JSONObject object = jsonArray.getJSONObject(i);
                 JSONArray weatherJ = object.getJSONArray("weather");
                 JSONObject weatherObject = weatherJ.getJSONObject(0);
@@ -64,8 +48,8 @@ public class OpenWeatherMapClient implements WeatherClient {
                 Weather weather = new Weather(jsonCityName, jsonCountry, temperatureDay, temperatureNight, humidity, wind, pressure, icon);
                 forecastWeatherList.add(weather);
             }
-            }catch (Exception e) {
-                e.printStackTrace();
+        } catch (Exception e) {
+            throw new GetWeatherForecastException("Problem with json reader");
         }
         return forecastWeatherList;
     }

@@ -4,6 +4,7 @@ module com.example.weatherforecast {
 
     requires org.controlsfx.controls;
     requires org.json;
+    requires spring.web;
 
     opens com.example.weatherforecast to javafx.fxml;
     opens com.example.weatherforecast.controller to javafx.fxml;
