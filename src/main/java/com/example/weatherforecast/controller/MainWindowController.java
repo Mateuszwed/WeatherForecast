@@ -2,11 +2,11 @@ package com.example.weatherforecast.controller;
 
 import com.example.weatherforecast.Launcher;
 import com.example.weatherforecast.model.Weather;
-import com.example.weatherforecast.model.client.GetWeatherForecastException;
-import com.example.weatherforecast.model.client.JSONReader;
-import com.example.weatherforecast.model.service.WeatherService;
-import com.example.weatherforecast.model.client.OpenWeatherMapClient;
-import com.example.weatherforecast.view.DayOfWeek;
+import com.example.weatherforecast.exception.GetWeatherForecastException;
+import com.example.weatherforecast.client.JSONReader;
+import com.example.weatherforecast.service.WeatherService;
+import com.example.weatherforecast.client.OpenWeatherMapClient;
+import com.example.weatherforecast.service.DayOfWeek;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -23,7 +23,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
-
     private WeatherService weatherService;
     private JSONReader jsonReader;
 
@@ -96,24 +95,14 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     void showLeftWeatherButtonAction() {
-        String country = leftCountryTextField.getText();
-        String city = leftCityTextField.getText();
+        var country = leftCountryTextField.getText();
+        var city = leftCityTextField.getText();
         jsonReader = new JSONReader();
-        OpenWeatherMapClient weatherClientFactory = new OpenWeatherMapClient(jsonReader);
+        var weatherClientFactory = new OpenWeatherMapClient(jsonReader);
         weatherService = new WeatherService(weatherClientFactory);
-
         try {
-            List<Weather> weathersList = weatherService.getWeatherForecast(city, country);
-            displayWeatherBoxes(weathersList,
-                    leftError,
-                    leftCountryAndCityLabel,
-                    leftTemperatureLabelShow,
-                    leftWindLabelShow,
-                    leftPressureLabelShow,
-                    leftHumidityLabelShow,
-                    leftIcon,
-                    leftWeatherBox,
-                    leftExtendedForecast);
+            var weathersList = weatherService.getWeatherForecast(city, country);
+            displayWeatherBoxes(weathersList, leftError, leftCountryAndCityLabel, leftTemperatureLabelShow, leftWindLabelShow, leftPressureLabelShow, leftHumidityLabelShow, leftIcon, leftWeatherBox, leftExtendedForecast);
         } catch (GetWeatherForecastException e) {
             cleanView(leftCountryAndCityLabel, leftWeatherBox, leftExtendedForecast);
             leftError.setText("Wystąpił błąd");
@@ -123,23 +112,14 @@ public class MainWindowController extends BaseController implements Initializabl
 
     @FXML
     void showRightWeatherButtonAction() {
-        String country = rightCountryTextField.getText();
-        String city = rightCityTextField.getText();
+        var country = rightCountryTextField.getText();
+        var city = rightCityTextField.getText();
         jsonReader = new JSONReader();
-        OpenWeatherMapClient weatherClientFactory = new OpenWeatherMapClient(jsonReader);
+        var weatherClientFactory = new OpenWeatherMapClient(jsonReader);
         weatherService = new WeatherService(weatherClientFactory);
         try {
-            List<Weather> weathersList = weatherService.getWeatherForecast(city, country);
-            displayWeatherBoxes(weathersList,
-                    rightError,
-                    rightCountryAndCityLabel,
-                    rightTemperatureLabelShow,
-                    rightWindLabelShow,
-                    rightPressureLabelShow,
-                    rightHumidityLabelShow,
-                    rightIcon,
-                    rightWeatherBox,
-                    rightExtendedForecast);
+            var weathersList = weatherService.getWeatherForecast(city, country);
+            displayWeatherBoxes(weathersList, rightError, rightCountryAndCityLabel, rightTemperatureLabelShow, rightWindLabelShow, rightPressureLabelShow, rightHumidityLabelShow, rightIcon, rightWeatherBox, rightExtendedForecast);
         } catch (GetWeatherForecastException e) {
             cleanView(rightCountryAndCityLabel, rightWeatherBox, rightExtendedForecast);
             rightError.setText("Wystąpił błąd");
@@ -149,7 +129,6 @@ public class MainWindowController extends BaseController implements Initializabl
     public MainWindowController(String fxmlName) {
         super(fxmlName);
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -179,24 +158,15 @@ public class MainWindowController extends BaseController implements Initializabl
     void setExtendedForecast(HBox extendedForecast, List<Weather> weathersList) {
         extendedForecast.getChildren().clear();
         extendedForecast.setVisible(true);
-
-        for ( int i = 1; i < weathersList.size(); i++ ) {
-            VBox vbox = new VBox();
+        for (int i = 1; i < weathersList.size(); i++) {
+            var vbox = new VBox();
             vbox.getStyleClass().add("smallWeatherBox");
-
-            Label cityName = new Label(DayOfWeek.getDayName(LocalDate.now().plusDays(i)));
-            ImageView icon = new ImageView(new Image(Objects.requireNonNull(Launcher.class.getResource(weathersList.get(i).getIcon() + ".png")).toString(), 35, 35, false, false));
-            Label temperature = new Label(weathersList.get(i).getTemperatureDay() + "\u00B0" + "/" + weathersList.get(i).getTemperatureNight() + "\u00B0");
-            Label pressure = new Label(weathersList.get(i).getPressure() + " hPa");
-            Label wind = new Label(weathersList.get(i).getWind() + " km/h");
-
-
-            vbox.getChildren().addAll(cityName,
-                    icon,
-                    temperature,
-                    pressure,
-                    wind);
-
+            var cityName = new Label(DayOfWeek.getDayName(LocalDate.now().plusDays(i)));
+            var icon = new ImageView(new Image(Objects.requireNonNull(Launcher.class.getResource(weathersList.get(i).getIcon() + ".png")).toString(), 35, 35, false, false));
+            var temperature = new Label(weathersList.get(i).getTemperatureDay() + "\u00B0" + "/" + weathersList.get(i).getTemperatureNight() + "\u00B0");
+            var pressure = new Label(weathersList.get(i).getPressure() + " hPa");
+            var wind = new Label(weathersList.get(i).getWind() + " km/h");
+            vbox.getChildren().addAll(cityName, icon, temperature, pressure, wind);
             extendedForecast.getChildren().add(vbox);
         }
     }

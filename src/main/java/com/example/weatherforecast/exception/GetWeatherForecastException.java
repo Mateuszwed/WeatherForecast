@@ -1,4 +1,4 @@
-package com.example.weatherforecast.model.client;
+package com.example.weatherforecast.exception;
 
 public class GetWeatherForecastException extends Exception{
 

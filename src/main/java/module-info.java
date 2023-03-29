@@ -10,4 +10,5 @@ module com.example.weatherforecast {
     opens com.example.weatherforecast.controller to javafx.fxml;
     exports com.example.weatherforecast;
     opens com.example.weatherforecast.view to javafx.fxml;
+    opens com.example.weatherforecast.service to javafx.fxml;
 }

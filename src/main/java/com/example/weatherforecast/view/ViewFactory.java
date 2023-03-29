@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewFactory {
-
     private List<Stage> activesStages;
 
     public ViewFactory() {
@@ -23,13 +22,12 @@ public class ViewFactory {
 
     public void showMainWindow(){
 
-        BaseController controller = new MainWindowController("MainWindow.fxml");
+        var controller = new MainWindowController("MainWindow.fxml");
         initializeStage(controller);
     }
 
     private void initializeStage(BaseController baseController){
-
-        FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource(baseController.getFxmlName()));
+        var fxmlLoader = new FXMLLoader(Launcher.class.getResource(baseController.getFxmlName()));
         fxmlLoader.setController(baseController);
         Parent parent;
         try {
@@ -38,7 +36,7 @@ public class ViewFactory {
             e.printStackTrace();
             return;
         }
-        Scene scene = new Scene(parent);
+        var scene = new Scene(parent);
         scene.getStylesheets().add(Launcher.class.getResource("styles.css").toExternalForm());
         Stage stage = new Stage();
         stage.setScene(scene);

@@ -1,6 +1,6 @@
-package com.example.weatherforecast.model.client;
+package com.example.weatherforecast.client;
 
-import com.example.weatherforecast.model.Weather;
+import com.example.weatherforecast.exception.GetWeatherForecastException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -22,10 +21,8 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class OpenWeatherMapClientTest {
-
     @Mock
     private JSONReader jsonReader;
-
     private OpenWeatherMapClient openWeatherMapClient;
 
     @BeforeEach
@@ -38,7 +35,7 @@ class OpenWeatherMapClientTest {
         //given
         when(jsonReader.readJsonFromUrl(anyString())).thenReturn(new JSONObject(exampleWeatherList()));
         //when
-        List<Weather> weatherList = openWeatherMapClient.getWeatherForecast("city", "country");
+        var weatherList = openWeatherMapClient.getWeatherForecast("city", "country");
         //then
         assertThat(weatherList, hasSize(5));
     }

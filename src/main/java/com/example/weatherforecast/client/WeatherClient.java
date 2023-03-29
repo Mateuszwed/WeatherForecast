@@ -1,6 +1,7 @@
-package com.example.weatherforecast.model.client;
+package com.example.weatherforecast.client;
 
 
+import com.example.weatherforecast.exception.GetWeatherForecastException;
 import com.example.weatherforecast.model.Weather;
 
 import java.util.List;
